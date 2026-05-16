@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ЗМЕЙКА</title>
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="sg-root">
+
+  <!-- МЕНЮ -->
+  <div id="sc-menu" class="sg-screen active">
+    <div class="sg-title">SIXSEVEEEEEEEEEEEEN</div>
+    <button class="sg-btn" onclick="showScreen('sc-game-init')">▶ &nbsp; ИГРАТЬ</button>
+    <button class="sg-btn dim" onclick="showScreen('sc-records')">◈ &nbsp; РЕКОРДЫ</button>
+    <button class="sg-btn dim" onclick="showScreen('sc-difficulty')">◎ &nbsp; СЛОЖНОСТЬ</button>
+  </div>
+
+  <!-- СЛОЖНОСТЬ -->
+  <div id="sc-difficulty" class="sg-screen">
+    <div class="sg-section-title">СЛОЖНОСТЬ</div>
+    <div class="sg-label">Выбирай давай</div>
+    <div class="sg-diff-row">
+      <button class="sg-diff-btn" id="diff-easy"   onclick="setDiff('easy')">ЛОХ</button>
+      <button class="sg-diff-btn selected" id="diff-medium" onclick="setDiff('medium')">НОРМИС</button>
+      <button class="sg-diff-btn" id="diff-hard"   onclick="setDiff('hard')">SIXSEVEEEEEN</button>
+    </div>
+    <div id="diff-desc" class="sg-diff-desc">скорость: средняя · стены: нет</div>
+    <button class="sg-btn" onclick="showScreen('sc-menu')">← &nbsp; НАЗАД</button>
+  </div>
+
+  <!-- РЕКОРДЫ -->
+  <div id="sc-records" class="sg-screen">
+    <div class="sg-section-title">РЕКОРДЫ</div>
+    <div class="sg-label">топ 67 игроков</div>
+    <div class="sg-records-list" id="records-list"></div>
+    <button class="sg-btn danger small" onclick="clearRecords()">✕ &nbsp; ОЧИСТИТЬ ВСЁ</button>
+    <button class="sg-btn dim" style="margin-top:10px" onclick="showScreen('sc-menu')">← &nbsp; НАЗАД</button>
+  </div>
+
+  <!-- ВВОД ИМЕНИ -->
+  <div id="sc-game-init" class="sg-screen">
+    <div class="sg-section-title">ИГРОК</div>
+    <div class="sg-label">кто ты,воин</div>
+    <input class="sg-input" id="player-name" maxlength="10" placeholder="ИМЯ" autocomplete="off" />
+    <button class="sg-btn" onclick="startGame()">▶ &nbsp; НАЧАТЬ</button>
+    <button class="sg-btn dim" onclick="showScreen('sc-menu')">← &nbsp; НАЗАД</button>
+  </div>
+
+  <!-- ИГРА -->
+  <div id="sc-game" class="sg-screen">
+    <div class="sg-hud">
+      <div>СЧЁТ:&nbsp;<span id="hud-score">0</span></div>
+      <div class="hud-diff" id="hud-diff">СРЕДНЕ</div>
+      <div>РЕКОРД:&nbsp;<span id="hud-best">0</span></div>
+    </div>
+    <canvas id="sg-canvas" width="400" height="400"></canvas>
+    <div class="sg-hint bright">ПРОБЕЛ — пауза</div>
+    <div class="sg-hint">↑ ↓ ← → или W A S D — управление</div>
+    <button class="sg-btn danger small" style="margin-top:14px" onclick="exitToMenu()">✕ &nbsp; ВЫЙТИ</button>
+  </div>
+
+  <!-- КОНЕЦ ИГРЫ -->
+  <div id="sc-gameover" class="sg-screen">
+    <div class="sg-section-title">БЕСПАЛЫЙ ЧТОЛИ?</div>
+    <div class="sg-gameover-label">ПОЗОРНЫЙ СЧЕТ</div>
+    <div class="sg-gameover-score" id="go-score">0</div>
+    <div class="sg-new-record" id="go-newrecord" style="display:none">★ &nbsp; ЛЕГЕНДА,НОВЫЙ РЕКОРД</div>
+    <div class="sg-go-stats">
+      <div>ДЛИНА: <span id="go-length">0</span></div>
+      <div>СЛОЖНОСТЬ: <span id="go-diff">—</span></div>
+    </div>
+    <button class="sg-btn" onclick="restartGame()">↺ &nbsp; ЕЩЕ РАЗ</button>
+    <button class="sg-btn dim" onclick="showScreen('sc-menu')">← &nbsp; МЕНЮ</button>
+  </div>
+
+</div>
+
+<script src="game.js"></script>
+</body>
+</html>
