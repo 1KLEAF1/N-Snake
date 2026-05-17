@@ -18,14 +18,14 @@ let gameLoop    = null;
 let paused      = false;
 let running     = false;
 
-// ── Экраны ──────────────────────────────────────────────────────────────────
+
 function showScreen(id) {
   document.querySelectorAll('.sg-screen').forEach(s => s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
   if (id === 'sc-records') renderRecords();
 }
 
-// ── Сложность ────────────────────────────────────────────────────────────────
+
 function setDiff(d) {
   currentDiff = d;
   document.querySelectorAll('.sg-diff-btn').forEach(b => b.classList.remove('selected'));
@@ -33,7 +33,7 @@ function setDiff(d) {
   document.getElementById('diff-desc').textContent = DIFF_CONFIG[d].desc;
 }
 
-// ── База рекордов (localStorage) ─────────────────────────────────────────────
+
 const DB_KEY = 'snake_records_v1';
 
 function dbGet() {
@@ -66,7 +66,7 @@ function dbGetBest() {
   return r.length ? r[0].score : 0;
 }
 
-// ── Рендер таблицы рекордов ───────────────────────────────────────────────────
+
 function renderRecords() {
   const records = dbGet();
   const el = document.getElementById('records-list');
@@ -103,7 +103,7 @@ function clearRecords() {
   }
 }
 
-// ── Игровые функции ───────────────────────────────────────────────────────────
+
 function startGame() {
   playerName = document.getElementById('player-name').value.trim() || 'ИГРОК';
   bestScore  = dbGetBest();
@@ -141,7 +141,7 @@ function initGame() {
   gameLoop = setInterval(tick, DIFF_CONFIG[currentDiff].speed);
 }
 
-// ── Игровая логика ────────────────────────────────────────────────────────────
+
 function placeFood() {
   let f;
   do {
@@ -200,16 +200,16 @@ function endGame() {
   showScreen('sc-gameover');
 }
 
-// ── Отрисовка Canvas ──────────────────────────────────────────────────────────
+
 const cvs = document.getElementById('sg-canvas');
 const ctx  = cvs.getContext('2d');
 
 function draw() {
-  // Фон
+  
   ctx.fillStyle = '#050508';
   ctx.fillRect(0, 0, 400, 400);
 
-  // Шахматная сетка
+  
   for (let x = 0; x < COLS; x++) {
     for (let y = 0; y < ROWS; y++) {
       if ((x + y) % 2 === 0) {
@@ -219,14 +219,14 @@ function draw() {
     }
   }
 
-  // Еда
+  
   ctx.fillStyle = '#ff3355';
   ctx.fillRect(food.x * CELL + 3, food.y * CELL + 3, CELL - 6, CELL - 6);
   ctx.strokeStyle = '#ff6677';
   ctx.lineWidth = 1;
   ctx.strokeRect(food.x * CELL + 3, food.y * CELL + 3, CELL - 6, CELL - 6);
 
-  // Крестик на еде
+  
   ctx.strokeStyle = '#ff1144';
   ctx.lineWidth = 1;
   const fx = food.x * CELL + CELL / 2;
@@ -236,7 +236,7 @@ function draw() {
   ctx.moveTo(fx, fy - 3); ctx.lineTo(fx, fy + 3);
   ctx.stroke();
 
-  // Змейка
+  
   snake.forEach((s, i) => {
     const t = i / snake.length;
     if (i === 0) {
@@ -248,13 +248,13 @@ function draw() {
     }
     ctx.fillRect(s.x * CELL + 1, s.y * CELL + 1, CELL - 2, CELL - 2);
 
-    // Обводка головы
+    
     if (i === 0) {
       ctx.strokeStyle = '#00ffaa';
       ctx.lineWidth = 1;
       ctx.strokeRect(s.x * CELL + 1, s.y * CELL + 1, CELL - 2, CELL - 2);
 
-      // Глаза
+      
       const eyeOff = 4;
       ctx.fillStyle = '#0a0a0f';
       if (dir.x === 1) {
@@ -287,7 +287,7 @@ function draw() {
   }
 }
 
-// ── Управление клавиатурой ────────────────────────────────────────────────────
+
 const KEY_MAP = {
   ArrowUp:    { x: 0, y: -1 }, KeyW: { x: 0, y: -1 },
   ArrowDown:  { x: 0, y:  1 }, KeyS: { x: 0, y:  1 },
@@ -307,7 +307,7 @@ document.addEventListener('keydown', e => {
   }
 });
 
-// Enter в поле имени запускает игру
+
 document.getElementById('player-name').addEventListener('keydown', e => {
   if (e.key === 'Enter') startGame();
 });
